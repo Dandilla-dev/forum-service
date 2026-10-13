@@ -27,7 +27,7 @@ export const deletePost = async (id) => {
      //TODO
  }
 
- export const addComment = async (id, commenter, content) => {
+ export const addComment = async (id, commenter, comment) => {
      //TODO
  }
 
