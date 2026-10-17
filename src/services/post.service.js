@@ -6,8 +6,12 @@ export const createPost = async (author, data) => {
 };
 
 
-export const deletePost = async (id) => {
-    //TODO
+export const deletePost = async (postId) => {
+    const post = await postRepository.deletePost(postId);
+    if(!post) {
+        throw new Error(`Post with id ${postId} not found`);
+    }
+    return post;
 }
 
  export const findPostById = async (postId) => {

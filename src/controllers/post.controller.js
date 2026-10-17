@@ -1,31 +1,71 @@
 import * as postService from '../services/post.service.js';
 
 export const createPost = async (req, res) => {
-    const post = await postService.createPost(req.params.user, req.body);
-        return res.status(201).json(post);
+    const post = await postService.createPost(req.params.author, req.body);
+    return res.status(201).json(post);
 }
 
-export const deletePost = async (req, res) => {
-    const post = await postService.deletePost(req.params.postId);
-    if (post) {
+export const findPostById = async (req, res) => {
+    try {
+        const post = await postService.findPostById(req.params.postId);
         return res.json(post);
-    } else {
+    } catch (e) {
         return res.status(404).json({
             "timestamp": new Date().toISOString(),
             "status": 404,
             "error": "Not Found",
-            "message": `Post with id = ${req.params.postId} not found`,
-            "path": req.originalUrl
+            "message": e.message,
+            "path": req.path
         });
     }
 }
 
-export const findPostById = async (req, res) => {
-    const post = await postService.findPostById(req.params.postId);
-    if (post) {
+export const deletePost = async (req, res) => {
+    try {
+        const post = await postService.deletePost(req.params.postId);
         return res.json(post);
-    } else {
-        return res.status(404).send()
+    } catch (e) {
+        return res.status(404).json({
+            "timestamp": new Date().toISOString(),
+            "status": 404,
+            "error": "Not Found",
+            "message": e.message,
+            "path": req.path
+        });
+    }
+}
+
+export const addLike = async (req, res) => {
+    try {
+        await postService.addLike(req.params.postId);
+        return res.sendStatus(204)
+    } catch (e) {
+        return res.status(404).json({
+            "timestamp": new Date().toISOString(),
+            "status": 404,
+            "error": "Not Found",
+            "message": e.message,
+            "path": req.path
+        });
+    }
+}
+
+export const findPostsByAuthor = async (req, res) => {
+    return res.json(await postService.findPostsByAuthor(req.params.author));
+}
+
+export const addComment = async (req, res) => {
+    try {
+        const post = await postService.addComment(req.params.postId, req.params.commenter, req.body.message);
+        return res.json(post);
+    } catch (e) {
+        return res.status(404).json({
+            "timestamp": new Date().toISOString(),
+            "status": 404,
+            "error": "Not Found",
+            "message": e.message,
+            "path": req.path
+        });
     }
 }
 
@@ -34,44 +74,25 @@ export const findPostsByTags = async (req, res) => {
     if (Array.isArray(req.query.values)) {
         values = req.query.values.join(',');
     }
-        return res.json(await postService.findPostsByTags(values));
-
-}
-
-export const findPostsByAuthor= async (req, res) => {
-    const posts = await postService.findPostsByAuthor(req.params.user);
-        return res.json(posts);
-
-}
-
-export const updatePost = async (req, res) => {
-    const updated = await postService.updatePost(req.params.postId, req.body);
-    if (updated) {
-        return res.json(updated);
-    } else {
-        return res.status(404).send()
-    }
-}
-
-export const addLike = async (req, res) => {
-    const success = await postService.addLike(req.params.postId);
-    if (success) {
-        return res.status(204).send();
-    } else {
-        return res.status(404).send()
-    }
-}
-
-export const addComment = async (req, res) => {
-   const post = await postService.addComment(req.params.postId, req.params.commenter, req.body);
-   if (post) {
-        return res.json(post);
-    } else {
-        return res.status(404).send()
-    }
+    return res.json(await postService.findPostsByTags(values));
 }
 
 export const findPostsByPeriod = async (req, res) => {
-    const posts = await postService.findPostsByPeriod(req.query.dateFrom, req.query.dateTo);
-    return res.json(posts);
+    const {dateFrom, dateTo} = req.query;
+    return res.json(await postService.findPostsByPeriod(dateFrom, dateTo));
+}
+
+export const updatePost = async (req, res) => {
+    try {
+        const post = await postService.updatePost(req.params.postId, req.body);
+        return res.json(post);
+    } catch (e) {
+        return res.status(404).json({
+            "timestamp": new Date().toISOString(),
+            "status": 404,
+            "error": "Not Found",
+            "message": e.message,
+            "path": req.path
+        });
+    }
 }
