@@ -10,8 +10,12 @@ export const deletePost = async (id) => {
     //TODO
 }
 
- export const findPostById = async (id) => {
-     //TODO
+ export const findPostById = async (postId) => {
+    const post = await postRepository.findPostById(postId);
+    if(!post) {
+        throw new Error(`Post with id ${postId} not found`);
+    }
+    return post;
  }
 
  export const findPostsByTags = async (tagsString) => {

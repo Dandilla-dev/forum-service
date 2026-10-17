@@ -6,4 +6,4 @@ export const createPost = async (postData) => {
     return Post.create(postData);
 }
 
-export const findPostById = async (id) => Post.findById(id).exec();
+export const findPostById = async (postId) => Post.findById(postId).exec();
