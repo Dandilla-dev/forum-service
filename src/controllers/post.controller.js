@@ -30,8 +30,11 @@ export const findPostById = async (req, res) => {
 }
 
 export const findPostsByTags = async (req, res) => {
-    const posts = await postService.findPostsByTags(req.query.values);
-        return res.json(posts);
+    let values = req.query.values;
+    if (Array.isArray(req.query.values)) {
+        values = req.query.values.join(',');
+    }
+        return res.json(await postService.findPostsByTags(values));
 
 }
 

@@ -5,14 +5,14 @@ import {createPost, findPostsByPeriod, deletePost, findPostsByAuthor,
 
 const router = Router();
 
-router.post('/forum/post/:user', createPost);
-router.get('/forum/post/:postId', findPostById);
-router.patch('/forum/post/:postId/like', addLike);
-router.get('/forum/posts/author/:user', findPostsByAuthor);
-router.patch('/forum/post/:postId/comment/:commenter', addComment)
-router.delete('/forum/post/:postId', deletePost)
-router.get('/forum/posts/tags', findPostsByTags)
-router.get('/forum/posts/period', findPostsByPeriod)
-router.patch('/forum/post/:postId', updatePost);
+router.post('/post/:user', createPost);
+router.get('/post/:postId', findPostById);
+router.patch('/post/:postId/like', addLike);
+router.get('/posts/author/:user', findPostsByAuthor);
+router.patch('/post/:postId/comment/:commenter', addComment)
+router.delete('/post/:postId', deletePost)
+router.get('/posts/tags', findPostsByTags)
+router.get('/posts/period', findPostsByPeriod)
+router.patch('/post/:postId', updatePost);
 
 export default router;
