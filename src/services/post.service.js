@@ -22,26 +22,28 @@ export const deletePost = async (postId) => {
     return post;
  }
 
- export const findPostsByTags = async (tagsString) => {
-     //TODO
+ export const findPostsByTags = async (tagsString) => await postRepository.findPostsByTags(tagsString);
+
+ export const findPostsByAuthor= async (user) => await postRepository.findPostsByAuthor(user);
+
+ export const updatePost = async (postId, data) =>  {
+     const post = await postRepository.updatePost(postId, data);
+     if(!post) {
+         throw new Error(`Post with id ${postId} not found`);
+     }
+     return post;
  }
 
- export const findPostsByAuthor= async (author) => {
-    //TODO
- }
-
- export const updatePost = async (id, data) => {
-     //TODO
- }
-
- export const addLike = async (id) => {
-     //TODO
+ export const addLike = async (postId) => {
+     const post = await postRepository.addLike(postId);
+     if(!post) {
+         throw new Error(`Post with id ${postId} not found`);
+     }
+     return post;
  }
 
  export const addComment = async (id, commenter, comment) => {
      //TODO
  }
 
- export const findPostsByPeriod = async (dateFrom, dateTo) => {
-     //TODO
- }
+ export const findPostsByPeriod = async (dateFrom, dateTo) => await postRepository.findPostsByPeriod(dateFrom, dateTo);

@@ -1,7 +1,7 @@
 import * as postService from '../services/post.service.js';
 
 export const createPost = async (req, res) => {
-    const post = await postService.createPost(req.params.author, req.body);
+    const post = await postService.createPost(req.params.user, req.body);
     return res.status(201).json(post);
 }
 
@@ -51,7 +51,7 @@ export const addLike = async (req, res) => {
 }
 
 export const findPostsByAuthor = async (req, res) => {
-    return res.json(await postService.findPostsByAuthor(req.params.author));
+    return res.json(await postService.findPostsByAuthor(req.params.user));
 }
 
 export const addComment = async (req, res) => {
