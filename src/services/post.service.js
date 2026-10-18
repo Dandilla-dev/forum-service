@@ -42,8 +42,13 @@ export const deletePost = async (postId) => {
      return post;
  }
 
- export const addComment = async (id, commenter, comment) => {
-     //TODO
- }
+export const addComment = async (postId, commenter, content) => {
+    const comment = {user: commenter, message: content};
+    const post = await postRepository.addComment(postId, comment);
+    if (!post) {
+        throw new Error(`Post with id = ${postId} not found`);
+    }
+    return post;
+}
 
  export const findPostsByPeriod = async (dateFrom, dateTo) => await postRepository.findPostsByPeriod(dateFrom, dateTo);

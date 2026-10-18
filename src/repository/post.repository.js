@@ -32,3 +32,5 @@ export const updatePost = async (postId, data) => {
 }
 
 export const findPostsByPeriod = async (dateFrom, dateTo) => Post.find({dateCreated: {$gte: dateFrom, $lte: dateTo}}).exec();
+
+export const addComment = async (postId, comment) => Post.findByIdAndUpdate(postId, { $push: { comments: comment } }, { returnDocument: 'after' }).exec();
