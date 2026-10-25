@@ -34,7 +34,7 @@ const userAccountSchema = new Schema({
         },
     },
     {
-        versionKey: false
+        versionKey: false,
         toJSON: {
             transform: (doc, ret) => {
                 ret.login = ret._id;
