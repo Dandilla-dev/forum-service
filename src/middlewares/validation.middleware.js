@@ -31,7 +31,7 @@ const schemas = {
     }),
     changeRole: Joi.object({
         login: Joi.string().required(),
-        role: Joi.string().valid(USER, MODERATOR, ADMIN).required()
+        role: Joi.string().valid(USER, MODERATOR, ADMIN).insensitive().required()
     })
 }
 

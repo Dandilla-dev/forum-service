@@ -16,7 +16,8 @@ const userAccountSchema = new Schema({
         // },
         password: {
             type: String,
-            required: true
+            required: true,
+            select: false
         },
         firstName: {
             type: String,
@@ -34,6 +35,13 @@ const userAccountSchema = new Schema({
     },
     {
         versionKey: false
+        toJSON: {
+            transform: (doc, ret) => {
+                ret.login = ret._id;
+                delete ret._id;
+                delete ret.password;
+            }
+        }
     });
 
 export default model('UserAccount', userAccountSchema, 'users');
