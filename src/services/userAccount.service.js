@@ -9,15 +9,33 @@ export const register = async (user) => {
 }
 
 export const removeUser = async (login) => {
-    // TODO: Implement user removal logic
+    const userAccount = await userAccountRepository.removeUser(login);
+    if (!userAccount) {
+        throw new Error(`User with login ${login} not found`);
+    }
+    return userAccount;
 }
 
-export const updateUser = async (login, updateData) => {
-    // TODO: Implement user update logic
-}
+   export const updateUser = async (login, updateData) => {
+        const userAccount = await userAccountRepository.updateUser(login, updateData);
+        if (!userAccount) {
+            throw new Error(`User with login '${login}' not found`);
+        }
+        return userAccount;
+    }
 
 export const changeRoles = async (login, role, isAddRole) => {
-    // TODO: Implement user role change logic
+    role = role.toUpperCase();
+    let userAccount;
+    if (isAddRole) {
+        userAccount = await userAccountRepository.addRole(login, role);
+    } else {
+        userAccount = await userAccountRepository.removeRole(login, role);
+    }
+    if (!userAccount) {
+        throw new Error(`User with login '${login}' not found`);
+    }
+    return userAccount;
 }
 
 export const changePassword = async (login, newPassword) => {
@@ -25,5 +43,9 @@ export const changePassword = async (login, newPassword) => {
 }
 
 export const getUser = async (login) => {
-    // TODO: Implement user retrieval logic
+    const userAccount = await userAccountRepository.findUser(login);
+    if (!userAccount) {
+        throw new Error(`User with login '${login}' not found`);
+    }
+    return userAccount;
 }
