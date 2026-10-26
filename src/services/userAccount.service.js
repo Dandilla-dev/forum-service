@@ -42,7 +42,9 @@ export const changeRoles = async (login, role, isAddRole) => {
 }
 
 export const changePassword = async (login, newPassword) => {
-    // TODO: Implement user password change logic
+        const salt = await bcrypt.genSalt(12);
+        newPassword = await bcrypt.hash(newPassword, salt)
+        return await userAccountRepository.changePassword(login, newPassword)
 }
 
 export const getUser = async (login) => {

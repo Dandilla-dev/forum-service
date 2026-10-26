@@ -19,7 +19,7 @@ router.delete('/user/:login', deleteUser);
 router.patch('/user/:login',validate('updateUser'), updateUser);
 router.patch('/user/:login/role/:role', validate('changeRole', 'params'), addRole);
 router.delete('/user/:login/role/:role', validate('changeRole', 'params'), deleteRole);
-router.patch('/password', changePassword);
+router.patch('/password', validate('changePassword'), changePassword);
 router.get('/user/:login', getUser);
 
 export default router;

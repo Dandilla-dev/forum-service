@@ -25,6 +25,9 @@ const schemas = {
         firstName: Joi.string().required(),
         lastName: Joi.string().required()
     }),
+    changePassword: Joi.object({
+       password: Joi.string().required()
+    }),
     updateUser: Joi.object({
         firstName: Joi.string(),
         lastName: Joi.string()
