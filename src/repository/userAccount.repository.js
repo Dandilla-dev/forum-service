@@ -1,7 +1,7 @@
-import Account from '../models/userAccount.model.js';
+import UserAccount from '../models/userAccount.model.js';
 
 export const addUser = async (user) => {
-    return await Account.create(user);
+    return await UserAccount.create(user);
 };
 
 export const removeUser = async (login) => UserAccount.findByIdAndDelete(login, {returnDocument: 'after'}).exec();
@@ -15,7 +15,7 @@ export const removeRole = async (login, role) => UserAccount.findByIdAndUpdate(l
 export const findUser = async (login) => UserAccount.findById(login).exec();
 
 export const changePassword = async (login, newPassword) => {
-    return await Account.findOneAndUpdate(
+    return await UserAccount.findOneAndUpdate(
         {login: login},
         {$set: {password: newPassword}},
         {returnDocument: 'after'}

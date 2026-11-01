@@ -44,7 +44,11 @@ export const changeRoles = async (login, role, isAddRole) => {
 export const changePassword = async (login, newPassword) => {
         const salt = await bcrypt.genSalt(12);
         newPassword = await bcrypt.hash(newPassword, salt)
-        return await userAccountRepository.changePassword(login, newPassword)
+        const userAccount = await userAccountRepository.changePassword(login, newPassword)
+    if (!userAccount) {
+        throw new Error(`User with login '${login}' not found`);
+    }
+    return userAccount
 }
 
 export const getUser = async (login) => {
