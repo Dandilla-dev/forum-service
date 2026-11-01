@@ -3,8 +3,6 @@ import bcrypt from "bcrypt";
 
 export const register = async (user) => {
     try {
-        const salt = await bcrypt.genSalt(12);
-        user.password = await bcrypt.hash(user.password, salt)
         return await userAccountRepository.addUser(user)
     }catch (e) {
         throw new Error('User already exists');
@@ -42,8 +40,6 @@ export const changeRoles = async (login, role, isAddRole) => {
 }
 
 export const changePassword = async (login, newPassword) => {
-        const salt = await bcrypt.genSalt(12);
-        newPassword = await bcrypt.hash(newPassword, salt)
         const userAccount = await userAccountRepository.changePassword(login, newPassword)
     if (!userAccount) {
         throw new Error(`User with login '${login}' not found`);

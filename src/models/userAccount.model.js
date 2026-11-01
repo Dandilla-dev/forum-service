@@ -1,6 +1,7 @@
 
 import {Schema, model} from 'mongoose';
 import {USER, MODERATOR, ADMIN} from "../configuration/constants.js";
+import bcrypt from "bcrypt";
 
 const userAccountSchema = new Schema({
 
@@ -9,11 +10,6 @@ const userAccountSchema = new Schema({
             required: true,
             alias: 'login'
         },
-        // login: {
-        //     type: String,
-        //     required: true,
-        //     unique: true
-        // },
         password: {
             type: String,
             required: true,
@@ -43,5 +39,10 @@ const userAccountSchema = new Schema({
             }
         }
     });
+
+userAccountSchema.pre('save', async function() {
+    const salt = await bcrypt.genSalt(12);
+    this.password = await bcrypt.hash(this.password, salt);
+});
 
 export default model('UserAccount', userAccountSchema, 'users');
