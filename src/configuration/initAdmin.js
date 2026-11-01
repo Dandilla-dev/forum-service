@@ -9,7 +9,7 @@ export const createAdmin = async () => {
             password: 'admin',
             firstName: 'Admin',
             lastName: 'Admin',
-            role: [USER, MODERATOR, ADMIN]
+            roles: [USER, MODERATOR, ADMIN]
         });
         await admin.save();
     }
