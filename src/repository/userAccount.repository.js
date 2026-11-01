@@ -13,9 +13,7 @@ export const removeRole = async (login, role) => UserAccount.findByIdAndUpdate(l
 export const findUser = async (login) => UserAccount.findById(login).exec();
 
 export const changePassword = async (login, newPassword) => {
-    return await UserAccount.findOneAndUpdate(
-        {login: login},
-        {$set: {password: newPassword}},
-        {returnDocument: 'after'}
-    ).exec();
+    const userAccount = await UserAccount.findById(login);
+    userAccount.password  = newPassword;
+    return userAccount.save();
 };
