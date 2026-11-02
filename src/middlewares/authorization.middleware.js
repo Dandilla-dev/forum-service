@@ -12,3 +12,4 @@ export const isOwnerOrHasRole = (paramName, role) => (req, res, next) => {
     const hasRole = req.principal.roles.includes(role.toUpperCase().trim());
     return isOwner || hasRole ? next() : res.status(403).json({ message: 'Access denied' });
 }
+
