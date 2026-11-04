@@ -10,11 +10,10 @@ import {
 
 const router = Router();
 router.all('/account/user/:login/role/:role', hasRole(ADMIN));
-router.patch('/account/user/:user', isOwner('user'));
+router.patch(['/account/user/:user', '/forum/post/:id/comment/:user'], isOwner('user'));
 router.delete('/account/user/:login', isOwnerOrHasRole('login', ADMIN));
 router.post('/forum/post/:author', isOwner('author'))
-router.patch('/forum/post/:id/comment/:commenter', isOwner('commenter'))
 router.patch('/forum/post/:id', checkPostOwner)
-router.delete('/forum/post/:id', isPostOwnerOrHasRole(MODERATOR))
+router.delete('/forum/post/:id', isPostOwnerOrHasRole('id', MODERATOR))
 
 export default router;
