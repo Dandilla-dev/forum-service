@@ -8,7 +8,7 @@
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
   },
   "keywords": [],
-  "author": "Edward",
+  "author": "Danila",
   "license": "ISC",
   "type": "module",
   "dependencies": {
